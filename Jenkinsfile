@@ -6,16 +6,22 @@ pipeline {
                 sh './gradlew build'   
             }
         }
-        stage('Test') { 
-            steps {
-             sh './gradlew test'
+        
+        stage('Integration test') { 
+            when {
+             anyOf {
+                branch 'develop';
+                branch 'main'
+             }
             }
         }
         stage('Deploy') { 
-            steps {
-                echo "Deploy"
-                 
+            when {
+                branch 'main'
             }
+            steps {
+                echo 'Deploying'
+            }      
         }
     }
 }
