@@ -9,19 +9,20 @@ pipeline {
         
         stage('Integration test') { 
             when {
-             anyOf {
-                branch 'develop';
-                branch 'main'
-             }
-            }
-        }
-        stage('Deploy') { 
-            when {
-                branch 'main'
+                anyOf {
+                    branch 'develop';
+                    branch 'main'
+                }
             }
             steps {
+                sh './gradlew test
+            }
+        }
+ 
+        stage('Deploy') { 
+            steps {
                 echo 'Deploying'
-            }      
+            }
         }
     }
 }
